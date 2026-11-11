@@ -1,6 +1,6 @@
-# Cafe Origen Analitica - Bitacora Semana 1 Dia 1
+# Cafe Origen Analitica - Bitacora Semana 1, dia 1
 
-## Diccionario de datos
+## MiniReto 1: Diccionario de datos
 
 El historial de ventas de Café Origen está representado mediante un arreglo de objetos llamado ventas. Cada objeto representa una venta realizada por un cliente y contiene las siguientes propiedades:
 
@@ -72,7 +72,7 @@ Los datos originales se conservarán sin modificaciones en el archivo datos.js. 
 
 De esta manera evitaré perder información y garantizaré que los resultados de los reportes sean más precisos.
 
-## Plan de indicadores en pseudocódigo
+## MiniReto 2: Plan de indicadores en pseudocódigo
 
 Antes de comenzar a programar las funciones de análisis, definí el siguiente plan para calcular los indicadores solicitados por la gerente de Café Origen.
 
@@ -241,3 +241,71 @@ Antes de implementar las funciones, definí cómo recorrer los datos, qué condi
 Utilizaré ciclos for...of para recorrer los registros y mantendré las funciones independientes, recibiendo el arreglo de ventas como parámetro.
 
 También tendré en cuenta los arreglos vacíos y las ventas con cantidad igual a cero para evitar errores en los cálculos.
+
+## MiniReto 3: Del ciclo al método, rankings y agrupaciones
+
+### 1. totalVendidoM(ventas)
+
+- ¿Qué recorro? Todos los registros del arreglo ventas.
+- ¿Qué filtro? No filtro registros.
+- ¿Qué transformo? Cada venta en su valor total mediante valorVenta().
+- ¿Qué acumulo? El dinero total de todas las ventas.
+- ¿Cómo agrupo? No realizo agrupaciones, solamente una suma con reduce().
+
+### 2. unidadesVendidasM(ventas)
+
+- ¿Qué recorro? Todos los registros de ventas.
+- ¿Qué filtro? Ventas con cantidad mayor que cero.
+- ¿Qué transformo? Los registros en cantidades de unidades.
+- ¿Qué acumulo? El total de unidades vendidas.
+- ¿Cómo agrupo? No agrupo, sumo las unidades con reduce().
+
+### 3. ventasPorCiudadM(ventas, ciudad)
+
+- ¿Qué recorro? Todos los registros de ventas.
+- ¿Qué filtro? Selecciono las ventas que coinciden con la ciudad solicitada.
+- ¿Qué transformo? Normalizo los nombres de las ciudades con trim() y toLowerCase().
+- ¿Qué acumulo? El dinero vendido en la ciudad seleccionada.
+- ¿Cómo agrupo? No agrupo todas las ciudades, calculo el total de una ciudad específica.
+
+### 4. totalPorCiudad(ventas)
+
+- ¿Qué recorro? Todos los registros de ventas.
+- ¿Qué filtro? No filtro registros.
+- ¿Qué transformo? Normalizo los nombres de las ciudades para evitar duplicados.
+- ¿Qué acumulo? El valor total de las ventas de cada ciudad.
+- ¿Cómo agrupo? Utilizo un objeto como diccionario y reduce() para guardar el total de cada ciudad.
+
+### 5. unidadesPorProducto(ventas)
+
+- ¿Qué recorro? Todos los registros de ventas.
+- ¿Qué filtro? No filtro registros.
+- ¿Qué transformo? Cada registro en una cantidad asociada a un producto.
+- ¿Qué acumulo? Las unidades vendidas de cada producto.
+- ¿Cómo agrupo? Utilizo el nombre del producto como clave de un objeto y sumo sus cantidades.
+
+### 6. topProductosPorValor(ventas, k)
+
+- ¿Qué recorro? Todos los registros de ventas.
+- ¿Qué filtro? No filtro registros.
+- ¿Qué transformo? Agrupo los productos y convierto los resultados en objetos mediante map().
+- ¿Qué acumulo? El dinero generado por cada producto.
+- ¿Cómo agrupo? Utilizo reduce() y Object.entries().
+- ¿Cómo ordeno? Utilizo sort() para ordenar de mayor a menor.
+- ¿Cómo selecciono? Utilizo slice() para obtener los primeros k productos.
+
+### Conclusión
+
+En este MiniReto aprendí a utilizar métodos de arreglos para simplificar
+los recorridos y agrupaciones de datos.
+
+También aprendí a utilizar objetos como diccionarios para agrupar
+información por ciudad y producto.
+
+Para realizar los rankings utilicé reduce(), map(), Object.entries(),
+sort() y slice().
+
+Las funciones nuevas se comparan con las versiones anteriores
+para comprobar que producen los mismos resultados.
+
+El arreglo original se conserva sin modificaciones.

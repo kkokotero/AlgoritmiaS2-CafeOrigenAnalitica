@@ -1,17 +1,17 @@
 import { ticketPromedio, totalVendido, unidadesVendidas, valorVenta, ventaMayor, ventasPorCiudad } from "./analitica.js";
-import { VENTAS_CORREGIDAS } from "./datos.js";
+import { VENTAS } from "./datos.js";
 
-console.log("Valor de la primera venta:", valorVenta(VENTAS_CORREGIDAS[0]));
-console.log("Total vendido:", totalVendido(VENTAS_CORREGIDAS));
-console.log("Unidades vendidas:", unidadesVendidas(VENTAS_CORREGIDAS));
-console.log("Venta mayor:", ventaMayor(VENTAS_CORREGIDAS));
-console.log("Ticket promedio:", ticketPromedio(VENTAS_CORREGIDAS));
-console.log("Ventas Medellín:", ventasPorCiudad(VENTAS_CORREGIDAS, "Medellín"));
+console.log("Valor de la primera venta:", valorVenta(VENTAS[0]));
+console.log("Total vendido:", totalVendido(VENTAS));
+console.log("Unidades vendidas:", unidadesVendidas(VENTAS));
+console.log("Venta mayor:", ventaMayor(VENTAS));
+console.log("Ticket promedio:", ticketPromedio(VENTAS));
+console.log("Ventas Medellín:", ventasPorCiudad(VENTAS, "Medellín"));
 
-console.log(`Propiedades del producto: ${Object.keys(VENTAS_CORREGIDAS[0]).join(", ")}`);
+console.log(`Propiedades del producto: ${Object.keys(VENTAS[0]).join(", ")}`);
 
 console.log("Ventas totales:");
-console.table(VENTAS_CORREGIDAS);
+console.table(VENTAS);
 
 // Pruebas con arreglos vacíos
 console.log("\nPRUEBAS CON ARREGLO VACÍO");

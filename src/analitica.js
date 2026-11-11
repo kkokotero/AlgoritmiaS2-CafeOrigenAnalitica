@@ -11,6 +11,18 @@ export const normalizarCiudad = (ciudad) => {
     .toLowerCase()
     .replace(/\b\p{L}/gu, (letra) => letra.toUpperCase());
 };
+
+/**
+ * Normaliza el nombre de un producto.
+ * @param {string} nombre - El nombre del producto a normalizar.
+ * @returns {string} El nombre del producto normalizado.
+ */
+export const normalizarNombre = (nombre) => {
+  return nombre
+    .trim()
+    .replace(/\b\p{L}/gu, (letra) => letra.toUpperCase());
+}
+
 /**
  * Calcula el valor total de una venta.
  * @param {import('./datos.js').Venta} venta - La venta para la cual calcular el valor.
@@ -36,6 +48,15 @@ export function totalVendido(ventas) {
 }
 
 /**
+ * Calcula el total vendido.
+ * @param {import('./datos.js').Venta[]} ventas - El array de ventas para calcular el total.
+ * @returns {number} El total vendido.
+ */
+export function totalVendidoM(ventas) {
+    return ventas.reduce((total, venta) => total + valorVenta(venta), 0);
+}
+
+/**
  * Calcula la cantidad total de unidades vendidas.
  * @param {import('./datos.js').Venta[]} ventas - El array de ventas para calcular las unidades vendidas.
  * @returns {number} La cantidad total de unidades vendidas.
@@ -48,6 +69,15 @@ export function unidadesVendidas(ventas) {
   }
 
   return unidades;
+}
+
+/**
+ * Calcula la cantidad total de unidades vendidas.
+ * @param {import('./datos.js').Venta[]} ventas - El array de ventas para calcular las unidades vendidas.
+ * @returns {number} La cantidad total de unidades vendidas.
+ */
+export function unidadesVendidasM(ventas) {
+    return ventas.reduce((total, venta) => total + venta.cantidad, 0);
 }
 
 /**
@@ -108,4 +138,91 @@ export function ventasPorCiudad(ventas, ciudad) {
   }
 
   return total;
+}
+
+/**
+ * Calcula el total de ventas para una ciudad específica.
+ * @param {import('./datos.js').Venta[]} ventas - El array de ventas para calcular el total.
+ * @param {string} ciudad - La ciudad para la cual calcular el total de ventas.
+ * @returns {number} El total de ventas para la ciudad especificada.
+ */
+export function ventasPorCiudadM(ventas, ciudad) {
+    const ciudadNormalizada = normalizarCiudad(ciudad);
+    return ventas.reduce((total, venta) => {
+        if (normalizarCiudad(venta.ciudad) === ciudadNormalizada) {
+            return total + valorVenta(venta);
+        }
+        return total;
+    }, 0);
+}
+
+/**
+ * Calcula el total de ventas para una ciudad específica.
+ * @param {import('./datos.js').Venta[]} ventas - El array de ventas para calcular el total.
+ * @returns {Record<string, number>} Un objeto con las ciudades como claves y el total de ventas como valores.
+ */
+export function totalPorCiudad(ventas) {
+    /** @type {Record<string, number>} */
+    const acumulador = {};
+
+    for (const venta of ventas) {
+        const ciudadNormalizada = normalizarCiudad(venta.ciudad);
+
+        if (!acumulador[ciudadNormalizada]) {
+            acumulador[ciudadNormalizada] = 0;
+        }
+
+        acumulador[ciudadNormalizada] += valorVenta(venta);
+    }
+
+    return acumulador;
+}
+
+/**
+ * Calcula el total de ventas para una ciudad específica.
+ * @param {import('./datos.js').Venta[]} ventas - El array de ventas para calcular el total.
+ * @returns {Record<string, number>} Un objeto con las ciudades como claves y el total de ventas como valores.
+ */
+export function unidadesPorProducto(ventas) {
+    /** @type {Record<string, number>} */
+    const acumulador = {};
+
+    for (const venta of ventas) {
+        const producto = normalizarNombre(venta.producto);
+
+        if (!acumulador[producto]) {
+            acumulador[producto] = 0;
+        }
+
+        acumulador[producto] += venta.cantidad;
+    }
+
+    return acumulador;
+}
+
+/**
+ * Obtiene los productos con más valor de venta.
+ * @param {import('./datos.js').Venta[]} ventas - El array de ventas para calcular el total.
+ * @param {number} topN - El número de productos top a devolver.
+ * @returns {Array<{producto: string, total: number}>} Un array con los productos top y su total de ventas.
+ */
+export function topProductosPorValor(ventas, topN = 5) {
+    /** @type {Record<string, number>} */
+    const acumulador = {};
+
+    for (const venta of ventas) {
+        const producto = normalizarNombre(venta.producto);
+
+        if (!acumulador[producto]) {
+            acumulador[producto] = 0;
+        }
+
+        acumulador[producto] += valorVenta(venta);
+    }
+
+    const productosOrdenados = Object.entries(acumulador)
+        .sort(([, valorA], [, valorB]) => valorB - valorA)
+        .slice(0, topN);
+
+    return productosOrdenados.map(([producto, total]) => ({ producto, total }));
 }

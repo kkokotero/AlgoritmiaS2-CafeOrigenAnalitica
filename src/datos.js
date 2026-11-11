@@ -128,10 +128,3 @@ export const VENTAS = [
     precio: 26000,
   },
 ];
-
-export const VENTAS_CORREGIDAS = VENTAS.map(venta => ({
-    ...venta,
-    cliente: venta.cliente.trim().toUpperCase(),
-    producto: venta.producto.trim(),
-    ciudad: normalizarCiudad(venta.ciudad)
-}));
