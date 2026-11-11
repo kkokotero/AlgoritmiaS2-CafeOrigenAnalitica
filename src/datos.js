@@ -12,6 +12,8 @@
  * @property {number} precio - Precio unitario del producto en pesos colombianos.
  */
 
+import { normalizarCiudad } from "./analitica.js";
+
 /**
  * Historial de ventas de Café Origen.
  * @type {Venta[]}
@@ -126,3 +128,10 @@ export const VENTAS = [
     precio: 26000,
   },
 ];
+
+export const VENTAS_CORREGIDAS = VENTAS.map(venta => ({
+    ...venta,
+    cliente: venta.cliente.trim().toUpperCase(),
+    producto: venta.producto.trim(),
+    ciudad: normalizarCiudad(venta.ciudad)
+}));
