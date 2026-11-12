@@ -1,7 +1,6 @@
-
 /**
  * Representa una venta realizada en Café Origen.
- * 
+ *
  * @typedef {Object} Venta
  * @property {number} id - Identificador único de la venta.
  * @property {string} fecha - Fecha de la venta (YYYY-MM-DD).
@@ -12,13 +11,11 @@
  * @property {number} precio - Precio unitario del producto en pesos colombianos.
  */
 
-import { normalizarCiudad } from "./analitica.js";
-
 /**
  * Historial de ventas de Café Origen.
  * @type {Venta[]}
  */
-export const VENTAS = [
+const VENTAS = [
   {
     id: 1,
     fecha: "2026-09-01",
@@ -128,3 +125,5 @@ export const VENTAS = [
     precio: 26000,
   },
 ];
+
+module.exports = { VENTAS };

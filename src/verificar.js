@@ -1,13 +1,12 @@
-import { VENTAS } from "./datos.js";
-
-import {
-    totalVendido,
-    unidadesVendidas,
-    ventasPorCiudad,
-    totalVendidoM,
-    unidadesVendidasM,
-    ventasPorCiudadM
-} from "./analitica.js";
+const {
+  totalVendido,
+  unidadesVendidas,
+  ventasPorCiudad,
+  totalVendidoM,
+  unidadesVendidasM,
+  ventasPorCiudadM,
+} = require("./analitica.js");
+const { VENTAS } = require("./datos.js");
 
 /**
  * Verifica si dos resultados son iguales.
@@ -17,13 +16,13 @@ import {
  * @param {T} resultadoMetodo - El resultado del método con método.
  */
 function verificar(nombre, resultadoCiclo, resultadoMetodo) {
-    if (resultadoCiclo === resultadoMetodo) {
-        console.log(`${nombre}: OK`);
-    } else {
-        console.log(`${nombre}: DIFERENTE`);
-        console.log("Ciclo:", resultadoCiclo);
-        console.log("Método:", resultadoMetodo);
-    }
+  if (resultadoCiclo === resultadoMetodo) {
+    console.log(`${nombre}: OK`);
+  } else {
+    console.log(`${nombre}: DIFERENTE`);
+    console.log("Ciclo:", resultadoCiclo);
+    console.log("Método:", resultadoMetodo);
+  }
 }
 
 // Comparaciones

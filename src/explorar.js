@@ -1,5 +1,12 @@
-import { ticketPromedio, totalVendido, unidadesVendidas, valorVenta, ventaMayor, ventasPorCiudad } from "./analitica.js";
-import { VENTAS } from "./datos.js";
+const {
+  ticketPromedio,
+  totalVendido,
+  unidadesVendidas,
+  valorVenta,
+  ventaMayor,
+  ventasPorCiudad,
+} = require("./analitica.js");
+const { VENTAS } = require("./datos.js");
 
 console.log("Valor de la primera venta:", valorVenta(VENTAS[0]));
 console.log("Total vendido:", totalVendido(VENTAS));

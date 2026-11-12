@@ -1,12 +1,19 @@
 {
   "name": "AlgoritmiaS2-CafeOrigenAnalitica",
-  "version": "1.0.0",
-  "description": "",
-	"type": "module",
+  "version": "0.1.0",
+  "description": "Motor de analítica de ventas de Café Origen y reporte de negocio por consola (v0.1)",
+  "main": "src/reporte.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "reporte": "node src/reporte.js",
+    "depuracion": "node src/depuracion.js",
+    "verificar": "node src/verificar.js",
+    "explorar": "node src/explorar.js",
+    "test": "node src/verificar.js && node src/depuracion.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "engines": {
+    "node": ">=18"
+  }
 }
