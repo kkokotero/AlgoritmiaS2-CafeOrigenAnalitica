@@ -1,4 +1,3 @@
-
 /**
  * Normaliza el nombre de una ciudad.
  * @param {string} ciudad - El nombre de la ciudad a normalizar.
@@ -18,10 +17,8 @@ export const normalizarCiudad = (ciudad) => {
  * @returns {string} El nombre del producto normalizado.
  */
 export const normalizarNombre = (nombre) => {
-  return nombre
-    .trim()
-    .replace(/\b\p{L}/gu, (letra) => letra.toUpperCase());
-}
+  return nombre.trim().replace(/\b\p{L}/gu, (letra) => letra.toUpperCase());
+};
 
 /**
  * Calcula el valor total de una venta.
@@ -53,7 +50,7 @@ export function totalVendido(ventas) {
  * @returns {number} El total vendido.
  */
 export function totalVendidoM(ventas) {
-    return ventas.reduce((total, venta) => total + valorVenta(venta), 0);
+  return ventas.reduce((total, venta) => total + valorVenta(venta), 0);
 }
 
 /**
@@ -77,7 +74,7 @@ export function unidadesVendidas(ventas) {
  * @returns {number} La cantidad total de unidades vendidas.
  */
 export function unidadesVendidasM(ventas) {
-    return ventas.reduce((total, venta) => total + venta.cantidad, 0);
+  return ventas.reduce((total, venta) => total + venta.cantidad, 0);
 }
 
 /**
@@ -147,13 +144,13 @@ export function ventasPorCiudad(ventas, ciudad) {
  * @returns {number} El total de ventas para la ciudad especificada.
  */
 export function ventasPorCiudadM(ventas, ciudad) {
-    const ciudadNormalizada = normalizarCiudad(ciudad);
-    return ventas.reduce((total, venta) => {
-        if (normalizarCiudad(venta.ciudad) === ciudadNormalizada) {
-            return total + valorVenta(venta);
-        }
-        return total;
-    }, 0);
+  const ciudadNormalizada = normalizarCiudad(ciudad);
+  return ventas.reduce((total, venta) => {
+    if (normalizarCiudad(venta.ciudad) === ciudadNormalizada) {
+      return total + valorVenta(venta);
+    }
+    return total;
+  }, 0);
 }
 
 /**
@@ -162,20 +159,20 @@ export function ventasPorCiudadM(ventas, ciudad) {
  * @returns {Record<string, number>} Un objeto con las ciudades como claves y el total de ventas como valores.
  */
 export function totalPorCiudad(ventas) {
-    /** @type {Record<string, number>} */
-    const acumulador = {};
+  /** @type {Record<string, number>} */
+  const acumulador = {};
 
-    for (const venta of ventas) {
-        const ciudadNormalizada = normalizarCiudad(venta.ciudad);
+  for (const venta of ventas) {
+    const ciudadNormalizada = normalizarCiudad(venta.ciudad);
 
-        if (!acumulador[ciudadNormalizada]) {
-            acumulador[ciudadNormalizada] = 0;
-        }
-
-        acumulador[ciudadNormalizada] += valorVenta(venta);
+    if (!acumulador[ciudadNormalizada]) {
+      acumulador[ciudadNormalizada] = 0;
     }
 
-    return acumulador;
+    acumulador[ciudadNormalizada] += valorVenta(venta);
+  }
+
+  return acumulador;
 }
 
 /**
@@ -184,20 +181,20 @@ export function totalPorCiudad(ventas) {
  * @returns {Record<string, number>} Un objeto con las ciudades como claves y el total de ventas como valores.
  */
 export function unidadesPorProducto(ventas) {
-    /** @type {Record<string, number>} */
-    const acumulador = {};
+  /** @type {Record<string, number>} */
+  const acumulador = {};
 
-    for (const venta of ventas) {
-        const producto = normalizarNombre(venta.producto);
+  for (const venta of ventas) {
+    const producto = normalizarNombre(venta.producto);
 
-        if (!acumulador[producto]) {
-            acumulador[producto] = 0;
-        }
-
-        acumulador[producto] += venta.cantidad;
+    if (!acumulador[producto]) {
+      acumulador[producto] = 0;
     }
 
-    return acumulador;
+    acumulador[producto] += venta.cantidad;
+  }
+
+  return acumulador;
 }
 
 /**
@@ -207,22 +204,51 @@ export function unidadesPorProducto(ventas) {
  * @returns {Array<{producto: string, total: number}>} Un array con los productos top y su total de ventas.
  */
 export function topProductosPorValor(ventas, topN = 5) {
-    /** @type {Record<string, number>} */
-    const acumulador = {};
+  /** @type {Record<string, number>} */
+  const acumulador = {};
 
-    for (const venta of ventas) {
-        const producto = normalizarNombre(venta.producto);
+  for (const venta of ventas) {
+    const producto = normalizarNombre(venta.producto);
 
-        if (!acumulador[producto]) {
-            acumulador[producto] = 0;
-        }
-
-        acumulador[producto] += valorVenta(venta);
+    if (!acumulador[producto]) {
+      acumulador[producto] = 0;
     }
 
-    const productosOrdenados = Object.entries(acumulador)
-        .sort(([, valorA], [, valorB]) => valorB - valorA)
-        .slice(0, topN);
+    acumulador[producto] += valorVenta(venta);
+  }
 
-    return productosOrdenados.map(([producto, total]) => ({ producto, total }));
+  const productosOrdenados = Object.entries(acumulador)
+    .sort(([, valorA], [, valorB]) => valorB - valorA)
+    .slice(0, topN);
+
+  return productosOrdenados.map(([producto, total]) => ({ producto, total }));
+}
+
+/**
+ * Obtiene las ventas para una fecha específica.
+ * @param {import('./datos.js').Venta[]} ventas - El array de ventas para filtrar.
+ * @param {Date} fecha - La fecha para filtrar las ventas.
+ * @returns {import('./datos.js').Venta[]} Un array con las ventas para la fecha especificada.
+ */
+export function ventasDelDia(ventas, fecha) {
+  return ventas.filter((venta) => {
+    const fechaVenta = new Date(venta.fecha);
+    return (
+      fechaVenta.getDate() === fecha.getDate() &&
+      fechaVenta.getMonth() === fecha.getMonth() &&
+      fechaVenta.getFullYear() === fecha.getFullYear()
+    );
+  });
+}
+
+/**
+ * Formatea un valor como moneda colombiana.
+ * @param {number | bigint | string} moneda - El valor a formatear como moneda.
+ * @returns {string} La moneda formateada.
+ */
+export function formatearMoneda(moneda) {
+  return new Intl.NumberFormat("es-CO", {
+    style: "currency",
+    currency: "COP",
+  }).format(Number(moneda));
 }
