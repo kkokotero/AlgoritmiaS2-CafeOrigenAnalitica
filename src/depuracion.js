@@ -31,6 +31,7 @@ const SEPARADOR = "─".repeat(78);
  * @returns {Record<string, number>} Totales por ciudad sin normalizar.
  */
 function versionPreliminarTotalPorCiudad(ventas) {
+  /** @type {Record<string, number>} */
   const acumulador = {};
 
   for (const venta of ventas) {

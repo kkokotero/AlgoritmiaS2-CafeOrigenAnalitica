@@ -47,7 +47,7 @@ function encabezado() {
 
 /**
  * Imprime el título de una sección.
- * @param {string} numero - Número de la sección.
+ * @param {string | number} numero - Número de la sección.
  * @param {string} titulo - Título de la sección.
  * @returns {void}
  */
